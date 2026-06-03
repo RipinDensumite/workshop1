@@ -1,1 +1,39 @@
+# Compiled output
 *.exe
+*.o
+*.obj
+*.out
+*.a
+*.dll
+
+# Build folders
+build/
+bin/
+obj/
+dist/
+Debug/
+Release/
+
+# VS Code
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/c_cpp_properties.json
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
