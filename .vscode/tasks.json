@@ -3,20 +3,23 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: g++.exe build active file",
-            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "label": "C/C++: cl.exe build active file",
+            "command": "cl.exe",
             "args": [
-                "-g",
-                "${workspaceFolder}\\src\\*.cpp",
-                "-I", "C:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\include",
-                "-L", "C:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\lib64\\vs14",
-                "-lmysqlcppconn",
-                "-o", "${workspaceFolder}\\app.exe"
+                "/Zi",
+                "/EHsc",
+                "/nologo",
+                "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}",
+                "/IC:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\include",
+                "/link",
+                "/LIBPATH:C:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\lib64\\vs14",
+                "mysqlcppconn.lib"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": ["$msCompile"],
             "group": { "kind": "build", "isDefault": true }
         }
     ]

@@ -6,23 +6,15 @@
         "${workspaceFolder}\\include",
         "${workspaceFolder}\\src",
         "${workspaceFolder}\\**",
-        // "C:\\msys64\\ucrt64\\include\\mariadb",
-        // "C:\\msys64\\ucrt64\\lib"
-        "C:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\include",
-        "C:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\lib64"
-        // "C:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\include\\"
-        // "C:\\Program Files\\MySQL\\mysql-connector-c-6.1.11\\include",
-        // "C:\\Program Files\\MySQL\\mysql-connector-c-6.1.11\\lib"
+        "C:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\include"
       ],
       "defines": [
         "_DEBUG",
         "UNICODE",
         "_UNICODE"
       ],
-      "compilerPath": "C:\\msys64\\ucrt64\\bin\\g++.exe",
-      "cStandard": "c17",
-      "cppStandard": "gnu++17",
-      "intelliSenseMode": "windows-gcc-x64"
+    "compilerPath": "D:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+      "intelliSenseMode": "windows-msvc-x64"
     }
   ],
   "version": 4
