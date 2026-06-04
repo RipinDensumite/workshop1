@@ -6,17 +6,16 @@
 
 // Item structure shared across the program
 struct Item {
-	int id;
-	std::string name;
-	int quantity;
-	double price;
-	std::string category;
-	std::string expiryDate;
+    int id;
+    std::string name;
+    int quantity;
+    double price;
+    std::string category;
+    std::string expiryDate;
 };
 
-// In-memory storage functions (replaces SQL DB usage)
-// Initialization / teardown
-bool connectDatabase(); // prepares in-memory storage (always returns true)
+// Database initialization / teardown
+bool connectDatabase(); // connects to MySQL and auto-creates database/tables
 void closeDatabase();
 
 // User-related functions
@@ -29,7 +28,7 @@ bool loadItemsFromDatabase(std::vector<Item>& inventory, int& nextId);
 bool updateItemQuantityInDatabase(int itemID, int quantity);
 bool deleteItemFromDatabase(int itemID);
 
-// Sales-related function (kept for API compatibility)
+// Sales-related function
 bool insertSale(int userID, int itemID, int quantity, const std::string& saleDate);
 
 #endif // DB_H

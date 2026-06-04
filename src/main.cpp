@@ -25,14 +25,23 @@ void pauseMenu() {
 }
 
 int main() {
+    if (!connectDatabase()) {
+        cout << "Failed to connect to database.\n";
+        return 1;
+    }
+
     showLoginScreen();
+
     while (true) {
         int choice = showMainMenu();
+
         if (choice == 1) {
             runInventoryModule();
         } else if (choice == 5) {
             break;
         }
     }
+
+    closeDatabase();
     return 0;
 }
