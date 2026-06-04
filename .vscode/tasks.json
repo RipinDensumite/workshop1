@@ -10,7 +10,7 @@
                 "/EHsc",
                 "/nologo",
                 "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "${file}",
+                "${workspaceFolder}\\src\\*.cpp",
                 "/IC:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\include",
                 "/link",
                 "/LIBPATH:C:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\lib64\\vs14",
