@@ -8,7 +8,6 @@
             "args": [
                 "/Zi",
                 "/EHsc",
-                "/nologo",
                 "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "${workspaceFolder}\\src\\*.cpp",
                 "/IC:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\include",
