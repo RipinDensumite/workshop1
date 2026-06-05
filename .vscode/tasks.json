@@ -2,13 +2,25 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Create build folders",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "if not exist \"${workspaceFolder}\\obj\" mkdir \"${workspaceFolder}\\obj\" && if not exist \"${workspaceFolder}\\bin\" mkdir \"${workspaceFolder}\\bin\""
+            ],
+            "problemMatcher": []
+        },
+        {
             "type": "cppbuild",
             "label": "C/C++: cl.exe build active file",
             "command": "cl.exe",
+            "dependsOn": "Create build folders",
+            "dependsOrder": "sequence",
             "args": [
-                "/Zi",
                 "/EHsc",
-                "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "/Fo${workspaceFolder}\\obj\\",
+                "/Fe${workspaceFolder}\\bin\\app.exe",
                 "${workspaceFolder}\\src\\*.cpp",
                 "/IC:\\Program Files\\MySQL\\mysql-connector-cpp-9.7.0\\include",
                 "/link",
@@ -19,7 +31,10 @@
                 "cwd": "${workspaceFolder}"
             },
             "problemMatcher": ["$msCompile"],
-            "group": { "kind": "build", "isDefault": true }
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
