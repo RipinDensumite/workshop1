@@ -32,15 +32,7 @@ int main() {
 
     showLoginScreen();
 
-    while (true) {
-        int choice = showMainMenu();
-
-        if (choice == 1) {
-            runInventoryModule();
-        } else if (choice == 5) {
-            break;
-        }
-    }
+    showMainMenu();
 
     closeDatabase();
     return 0;

@@ -1,3 +1,4 @@
+#include "../include/inventory.h"
 #include "../include/mainmenu.h"
 #include "../include/ExpiryTrack.h"
 #include "../include/StockMonitor.h"
@@ -12,9 +13,10 @@ static void clearInput() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-int showMainMenu() {
+void showMainMenu() {
     while (true) {
         clearScreen();
+
         std::cout << "===FRESH ITEM INVENTORY SYSTEM===\n\n";
         std::cout << "1. Inventory Menu\n";
         std::cout << "2. Expiry tracking\n";
@@ -35,7 +37,8 @@ int showMainMenu() {
 
         switch (choice) {
             case 1:
-                return 1;
+                runInventoryModule();
+                break;
             case 2:
                 showExpiryTrackingMenu();
                 break;
@@ -46,7 +49,7 @@ int showMainMenu() {
                 showReportMenu();
                 break;
             case 5:
-                return 5;
+                return;
             default:
                 std::cout << "Please choose a valid option (1-5).\n";
                 pauseMenu();
