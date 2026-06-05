@@ -33,4 +33,28 @@ bool insertSale(int userID, int itemID, int quantity, const std::string& saleDat
 
 bool insertWaste(int itemID, int quantity, const std::string& reason);
 
+// Report structures
+struct SalesReport {
+    int saleID;
+    std::string username;
+    std::string itemName;
+    int quantitySold;
+    double price;
+    double totalAmount;
+    std::string saleDate;
+    std::string saleTime;
+};
+
+struct WasteReport {
+    int wasteID;
+    std::string itemName;
+    int quantity;
+    std::string reason;
+    std::string wasteDate;
+};
+
+// Report-related functions
+bool loadSalesReportFromDatabase(std::vector<SalesReport>& sales);
+bool loadWasteReportFromDatabase(std::vector<WasteReport>& wastes);
+
 #endif // DB_H

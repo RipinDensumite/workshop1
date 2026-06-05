@@ -474,3 +474,94 @@ bool insertWaste(int itemID, int quantity, const string& reason) {
         return false;
     }
 }
+
+bool loadSalesReportFromDatabase(vector<SalesReport>& sales) {
+    try {
+        unique_ptr<sql::Connection> conn = openConnection();
+
+        unique_ptr<sql::Statement> stmt(conn->createStatement());
+
+        unique_ptr<sql::ResultSet> res(
+            stmt->executeQuery(
+                "SELECT "
+                "s.saleID, "
+                "u.username, "
+                "i.name AS itemName, "
+                "s.quantity_sold, "
+                "i.price, "
+                "(s.quantity_sold * i.price) AS totalAmount, "
+                "DATE_FORMAT(s.sale_date, '%Y-%m-%d') AS saleDate, "
+                "TIME_FORMAT(s.sale_time, '%H:%i:%s') AS saleTime "
+                "FROM sales s "
+                "INNER JOIN users u ON s.userID = u.userID "
+                "INNER JOIN items i ON s.itemID = i.itemID "
+                "ORDER BY s.sale_date DESC, s.sale_time DESC, s.saleID DESC"
+            )
+        );
+
+        sales.clear();
+
+        while (res->next()) {
+            SalesReport sale;
+
+            sale.saleID = res->getInt("saleID");
+            sale.username = res->getString("username");
+            sale.itemName = res->getString("itemName");
+            sale.quantitySold = res->getInt("quantity_sold");
+            sale.price = res->getDouble("price");
+            sale.totalAmount = res->getDouble("totalAmount");
+            sale.saleDate = res->getString("saleDate");
+            sale.saleTime = res->getString("saleTime");
+
+            sales.push_back(sale);
+        }
+
+        return true;
+
+    } catch (sql::SQLException& e) {
+        printDatabaseError(e);
+        return false;
+    }
+}
+
+bool loadWasteReportFromDatabase(vector<WasteReport>& wastes) {
+    try {
+        unique_ptr<sql::Connection> conn = openConnection();
+
+        unique_ptr<sql::Statement> stmt(conn->createStatement());
+
+        unique_ptr<sql::ResultSet> res(
+            stmt->executeQuery(
+                "SELECT "
+                "w.wasteID, "
+                "i.name AS itemName, "
+                "w.quantity, "
+                "w.reason, "
+                "DATE_FORMAT(w.waste_date, '%Y-%m-%d %H:%i:%s') AS wasteDate "
+                "FROM waste w "
+                "INNER JOIN items i ON w.itemID = i.itemID "
+                "ORDER BY w.waste_date DESC, w.wasteID DESC"
+            )
+        );
+
+        wastes.clear();
+
+        while (res->next()) {
+            WasteReport waste;
+
+            waste.wasteID = res->getInt("wasteID");
+            waste.itemName = res->getString("itemName");
+            waste.quantity = res->getInt("quantity");
+            waste.reason = res->getString("reason");
+            waste.wasteDate = res->getString("wasteDate");
+
+            wastes.push_back(waste);
+        }
+
+        return true;
+
+    } catch (sql::SQLException& e) {
+        printDatabaseError(e);
+        return false;
+    }
+}
