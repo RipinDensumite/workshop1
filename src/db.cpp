@@ -401,3 +401,76 @@ bool insertSale(int userID, int itemID, int quantity, const string& saleDate) {
         return false;
     }
 }
+
+bool insertWaste(int itemID, int quantity, const string& reason) {
+    if (itemID <= 0 || quantity <= 0) {
+        return false;
+    }
+
+    unique_ptr<sql::Connection> conn;
+
+    try {
+        conn = openConnection();
+        conn->setAutoCommit(false);
+
+        unique_ptr<sql::PreparedStatement> checkStock(
+            conn->prepareStatement(
+                "SELECT quantity FROM items WHERE itemID = ? FOR UPDATE"
+            )
+        );
+
+        checkStock->setInt(1, itemID);
+
+        unique_ptr<sql::ResultSet> res(checkStock->executeQuery());
+
+        if (!res->next()) {
+            conn->rollback();
+            return false;
+        }
+
+        int currentQuantity = res->getInt("quantity");
+
+        if (quantity > currentQuantity) {
+            conn->rollback();
+            return false;
+        }
+
+        unique_ptr<sql::PreparedStatement> insertWasteStmt(
+            conn->prepareStatement(
+                "INSERT INTO waste (itemID, quantity, reason) VALUES (?, ?, ?)"
+            )
+        );
+
+        insertWasteStmt->setInt(1, itemID);
+        insertWasteStmt->setInt(2, quantity);
+        insertWasteStmt->setString(3, reason);
+        insertWasteStmt->executeUpdate();
+
+        unique_ptr<sql::PreparedStatement> updateStockStmt(
+            conn->prepareStatement(
+                "UPDATE items SET quantity = quantity - ? WHERE itemID = ?"
+            )
+        );
+
+        updateStockStmt->setInt(1, quantity);
+        updateStockStmt->setInt(2, itemID);
+        updateStockStmt->executeUpdate();
+
+        conn->commit();
+        conn->setAutoCommit(true);
+
+        return true;
+
+    } catch (sql::SQLException& e) {
+        if (conn) {
+            try {
+                conn->rollback();
+            } catch (...) {
+                // Ignore rollback error
+            }
+        }
+
+        printDatabaseError(e);
+        return false;
+    }
+}

@@ -31,4 +31,6 @@ bool deleteItemFromDatabase(int itemID);
 // Sales-related function
 bool insertSale(int userID, int itemID, int quantity, const std::string& saleDate);
 
+bool insertWaste(int itemID, int quantity, const std::string& reason);
+
 #endif // DB_H
